@@ -79,6 +79,7 @@ public class UserTest {
         int actual = user.getAge();
         assertEquals(result, actual);
     }
+    //1 year<
     @Test
     public void test_getAge_6() {
     	calendar.set(1998, calendar.get(Calendar.DECEMBER), 30);
@@ -88,6 +89,7 @@ public class UserTest {
         int actual = user.getAge();
         assertEquals(result, actual);
     }
+    //1year>
     @Test
     public void test_getAge_7() {
     	calendar.set(2001, calendar.get(Calendar.DECEMBER), 30);

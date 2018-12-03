@@ -21,6 +21,26 @@
     <version>4.12</version>
     <scope>test</scope>
   </dependency>
-
+  
+  <dependency>
+    <groupId>joda-time</groupId>
+    <artifactId>joda-time</artifactId>
+    <version>2.9.9</version>
+</dependency>
+  <dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4.1208.jre7</version>
+		</dependency>
+  <dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-lang3</artifactId>
+    <version>3.4</version>
+</dependency>
+<dependency>
+    <groupId>net.coobird</groupId>
+    <artifactId>thumbnailator</artifactId>
+    <version>0.4.8</version>
+</dependency>
   </dependencies>
 </project>
