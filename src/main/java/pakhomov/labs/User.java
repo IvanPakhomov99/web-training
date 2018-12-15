@@ -7,10 +7,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-/**
- * Hello world!
- *
- */
+
 @SuppressWarnings("serial")
 public class User implements Serializable {
 	private String firstName;
