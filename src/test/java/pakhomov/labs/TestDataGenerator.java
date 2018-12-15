@@ -93,7 +93,11 @@ public class TestDataGenerator {
 			System.out.println("Data generated successful");
 		}
 	}
-
+	
+	
+	
+	
+	
 	private static void clearMedia() throws IOException {
 		if (Files.exists(Paths.get(MEDIA_DIR))) {
 			Files.walkFileTree(Paths.get(MEDIA_DIR), new SimpleFileVisitor<Path>() {

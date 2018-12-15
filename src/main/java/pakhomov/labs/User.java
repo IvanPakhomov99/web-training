@@ -24,7 +24,11 @@ public class User implements Serializable {
         this.lastName = lastName;
         this.birthday = birthday;
     }
-    //Gettes and Setters for Id, FirstName, LastName and Birthday
+    public User() {
+		// TODO Auto-generated constructor stub
+	}
+
+	//Gettes and Setters for Id, FirstName, LastName and Birthday
     public Long getId() {
         return id;
     }
@@ -73,5 +77,28 @@ public class User implements Serializable {
         LocalDate birthLocalDate = inst.atZone(zoneId).toLocalDate();
         return (int) ChronoUnit.YEARS.between(birthLocalDate, currentLocalDate);
     }
+    
+	@Override
+	public int hashCode() {
+		if(this.getId() == null) {
+			return 0;
+		}
+		return this.getId().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		if(this == obj) {
+			return true;
+		}
+		if(this.getId() == null && ((User) obj).getId() == null) {
+			return true;
+		}
+		
+		return this.getId().equals(((User) obj).getId());
+	}
 
 }
