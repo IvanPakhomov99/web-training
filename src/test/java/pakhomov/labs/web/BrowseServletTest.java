@@ -8,7 +8,7 @@ import pakhomov.labs.User;
 public class BrowseServletTest extends MockServletTestCase{
 	
     @Override
-    public void setUp() throws Exception {
+    protected void setUp() throws Exception {
         super.setUp();
         createServlet(BrowseServlet.class);
     }
