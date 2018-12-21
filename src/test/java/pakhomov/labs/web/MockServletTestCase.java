@@ -1,35 +1,36 @@
 package pakhomov.labs.web;
-import com.mockobjects.dynamic.Mock;
-import com.mockrunner.servlet.BasicServletTestCaseAdapter;
-import pakhomov.labs.db.DaoFactory;
-import pakhomov.labs.db.MockDaoFactory;
+
 import java.util.Properties;
 
-public abstract class MockServletTestCase extends BasicServletTestCaseAdapter{
-	
-	   private Mock mockUserDao;
+import com.mockobjects.dynamic.Mock;
+import com.mockrunner.servlet.BasicServletTestCaseAdapter;
 
-	    public Mock getMockUserDao() {
-	        return mockUserDao;
-	    }
+import pakhomov.labs.db.DaoFactory;
+import pakhomov.labs.db.MockDaoFactory;
 
-	    public void setMockUserDao(Mock mockUserDao) {
-	        this.mockUserDao = mockUserDao;
-	    }
-	    
-	    
-	    protected void setUp() throws Exception {
-	        super.setUp();
-	        Properties properties = new Properties();
-	        properties.setProperty("dao.factory", MockDaoFactory.class.getName());
-	        DaoFactory.init(properties);
-	        setMockUserDao(((MockDaoFactory) DaoFactory.getInstance()).getMockUserDao());
-	    }
+public abstract class MockServletTestCase extends BasicServletTestCaseAdapter {
 
-	    
-	    protected void tearDown() throws Exception {
-	        getMockUserDao().verify();
-	        super.tearDown();
-	    }
-	    
+	private Mock mockUserDao;
+
+	protected Mock getMockUserDao() {
+		return mockUserDao;
+	}
+
+	protected void setMockUserDao(Mock mockUserDao) {
+		this.mockUserDao = mockUserDao;
+	}
+
+	protected void setUp() throws Exception {
+		super.setUp();
+		Properties properties = new Properties();
+		properties.setProperty("dao.factory", MockDaoFactory.class.getName());
+		DaoFactory.init(properties);
+		setMockUserDao(((MockDaoFactory) DaoFactory.getInstance()).getMockUserDao());
+	}
+
+	protected void tearDown() throws Exception {
+		getMockUserDao().verify();
+		super.tearDown();
+	}
+
 }

@@ -17,7 +17,17 @@ public class BrowseServlet extends HttpServlet {
 
 	@Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (Objects.nonNull(req.getParameter("addButton"))) {
+            add(req, resp);
+        } else if (Objects.nonNull(req.getParameter("editButton"))) {
+            edit(req, resp);
+        } else if (Objects.nonNull(req.getParameter("deleteButton"))) {
+            delete(req, resp);
+        } else if (Objects.nonNull(req.getParameter("detailsButton"))) {
+            details(req, resp);
+        } else {
             browse(req, resp);
+        }
     }
 	
 	private void browse(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -8,7 +8,7 @@ import pakhomov.labs.User;
 public class BrowseServletTest extends MockServletTestCase{
 	
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
         createServlet(BrowseServlet.class);
     }
@@ -25,5 +25,16 @@ public class BrowseServletTest extends MockServletTestCase{
         assertNotNull("Could not find list of users in session", collection);
         assertSame(list, collection);
     }
-
+    
+    public void testEdit() {
+        User user = new User(new Long(1000), "John", "Doe", new Date());
+        getMockUserDao().expectAndReturn("find", new Long(1000), user);
+        addRequestParameter("editButton", "Edit");
+        addRequestParameter("id", "1000");
+        doPost();
+        User actualUser = (User) getWebMockObjectFactory().getMockSession().getAttribute("user");
+        assertNotNull("Could not find user in session", actualUser);
+        assertEquals(user, actualUser);
+    }
+    
 }

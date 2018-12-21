@@ -53,8 +53,8 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public void setBirthday(Date string) {
+        this.birthday = string;
     }
     
     //with help StringBuilder we can working with Strings without any problems like when we have a lot of inforamations 
