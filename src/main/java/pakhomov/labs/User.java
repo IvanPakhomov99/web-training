@@ -21,6 +21,11 @@ public class User implements Serializable {
         this.lastName = lastName;
         this.birthday = birthday;
     }
+    public User(String firstName, String lastName, Date birthday) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+    }
     public User() {
 		// TODO Auto-generated constructor stub
 	}
