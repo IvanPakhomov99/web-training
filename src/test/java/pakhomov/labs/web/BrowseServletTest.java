@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import pakhomov.labs.User;
+import pakhomov.labs.db.DatabaseException;
 
 public class BrowseServletTest extends MockServletTestCase{
 	
@@ -35,6 +36,37 @@ public class BrowseServletTest extends MockServletTestCase{
         User actualUser = (User) getWebMockObjectFactory().getMockSession().getAttribute("user");
         assertNotNull("Could not find user in session", actualUser);
         assertEquals(user, actualUser);
+    }
+    
+    public void testDetails() {
+    	User user = new User(new Long(1000), "John", "Doe", new Date());
+        getMockUserDao().expectAndReturn("find", new Long(1000), user);
+        addRequestParameter("detailsButton", "Details");
+        addRequestParameter("id", "1000");
+        doPost();
+        User actualUser = (User) getWebMockObjectFactory().getMockSession().getAttribute("user");
+        assertNotNull("Could not find user in session", actualUser);
+        assertEquals(user, actualUser);
+    }
+
+    public void testDelete() {
+    	User user = new User(new Long(1000), "John", "Doe", new Date());
+        getMockUserDao().expectAndReturn("find", new Long(1000), user);
+        getMockUserDao().expect("delete", user);
+        addRequestParameter("deleteButton", "Delete");
+        addRequestParameter("id", "1000");
+        doPost();
+    }
+
+    public void testDeleteWithIncorrectId() {
+        String errorMessage = "Incorrect id";
+        getMockUserDao().expectAndThrow("find", new Long(1000), new DatabaseException(errorMessage));
+        addRequestParameter("deleteButton", "Delete");
+        addRequestParameter("id", "1000");
+        doPost();
+        String mockErrorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute("error");
+        assertNotNull("Could not find error message", mockErrorMessage);
+        assertTrue(mockErrorMessage.contains(mockErrorMessage));
     }
     
 }

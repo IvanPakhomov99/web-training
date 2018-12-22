@@ -31,13 +31,41 @@ public class BrowseServlet extends HttpServlet {
 		}
 	}
 
-	private void details(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
+	private void details(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		 String idString = req.getParameter("id");
+	        if (Objects.isNull(idString) || idString.trim().isEmpty()) {
+	        	req.setAttribute("error", "You must select a user");
+	            req.getRequestDispatcher("/browse.jsp").forward(req, resp);
+	            return;
+	        }
+        try {
+            User user = DaoFactory.getInstance().getUserDao().find(Long.parseLong(idString));
+            req.getSession(true).setAttribute("user", user);
+        } catch (Exception e) {
+        	req.setAttribute("error", "Error:" + e.toString());
+            req.getRequestDispatcher("/browse.jsp").forward(req, resp);
+            return;
+        }
+        req.getRequestDispatcher("/details").forward(req, resp);
 
 	}
 
-	private void delete(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
+	private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		 String idString = req.getParameter("id");
+	        if (Objects.isNull(idString) || idString.trim().isEmpty()) {
+	        	req.setAttribute("error", "You must select a user");
+	            req.getRequestDispatcher("/browse.jsp").forward(req, resp);
+	            return;
+	        }
+	        try {
+	            User user = DaoFactory.getInstance().getUserDao().find(Long.parseLong(idString));
+	            DaoFactory.getInstance().getUserDao().delete(user);
+	        } catch (DatabaseException e) {
+	        	req.setAttribute("error", "Error:" + e.toString());
+	            req.getRequestDispatcher("/browse.jsp").forward(req, resp);
+	            return;
+	        }
+	        resp.sendRedirect("/browse");
 
 	}
 
@@ -60,8 +88,8 @@ public class BrowseServlet extends HttpServlet {
 		
 	}
 
-	private void add(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
+	private void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("/add").forward(req, resp);
 
 	}
 

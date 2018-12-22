@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import pakhomov.labs.User;
 import pakhomov.labs.db.DaoFactory;
 import pakhomov.labs.db.DatabaseException;
+import pakhomov.labs.gui.Exceptions.DataInputException;
 
 public class EditServlet extends HttpServlet {
 
@@ -31,8 +32,15 @@ public class EditServlet extends HttpServlet {
 		}
 	}
 
-	private void updateUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		User user = getUser(req);
+	private void updateUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		User user;
+		try {
+            user = getUser(req);
+        } catch (DataInputException e) {
+            req.setAttribute("error", e.getMessage());
+            showPage(req, resp);
+            return;
+        }
 		try {
 			processUser(user);
 		} catch (DatabaseException e) {
@@ -43,23 +51,35 @@ public class EditServlet extends HttpServlet {
 	}
 
 	private void cancelEdit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		req.getRequestDispatcher("/browse").forward(req, resp);
 	}
 
 	protected void showPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		 req.getRequestDispatcher("/edit.jsp").forward(req, resp);
 	}
 
 	protected void processUser(User user) throws DatabaseException {
 		DaoFactory.getInstance().getUserDao().update(user);
 	}
 
-	private User getUser(HttpServletRequest req) {
+	private User getUser(HttpServletRequest req) throws DataInputException {
 		User user = new User();
 		String idString = req.getParameter("id");
 		String firstName = req.getParameter("firstName");
 		String lastName = req.getParameter("lastName");
 		String dateString = req.getParameter("date");
+		if (Objects.nonNull(idString)) {
+            user.setId(new Long(idString));
+        }
+        if (Objects.isNull(firstName)) {
+            throw new DataInputException("First name can not be empty");
+        }
+        if (Objects.isNull(lastName)) {
+        	throw new DataInputException("Last name can not be empty");
+        }
+        if (Objects.isNull(dateString)) {
+        	throw new DataInputException("Date can not be empty");
+        }
 		if (Objects.nonNull(idString)) {
 			user.setId(new Long(idString));
 		}
