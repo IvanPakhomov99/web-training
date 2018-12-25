@@ -5,6 +5,7 @@ import pakhomov.labs.User;
 import pakhomov.labs.agent.Exceptions.SearchException;
 import pakhomov.labs.db.DaoFactory;
 import pakhomov.labs.db.DatabaseException;
+import jade.core.AID;
 import jade.core.Agent;
 
 /**
@@ -18,6 +19,7 @@ public class SearchAgent extends Agent {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private AID[] aids;
 	@Override
 	protected void setup() {
 		super.setup();
@@ -36,7 +38,7 @@ public class SearchAgent extends Agent {
             if (users.size() > 0) {
                 showUsers(users);
             } else {
-                //
+				addBehaviour(new SearchRequestBehaviour(aids, firstName, lastName));
             }
         } catch (DatabaseException e) {
             throw new SearchException(e);
