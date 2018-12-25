@@ -7,6 +7,7 @@ import pakhomov.labs.db.DaoFactory;
 import pakhomov.labs.db.DatabaseException;
 import jade.core.AID;
 import jade.core.Agent;
+import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -40,6 +41,28 @@ public class SearchAgent extends Agent {
 		} catch (FIPAException e) {
 			e.printStackTrace();
 		}
+		addBehaviour(new TickerBehaviour(this, 60000) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onTick() {
+				DFAgentDescription agentDescription = new DFAgentDescription();
+				ServiceDescription serviceDescription = new ServiceDescription();
+				serviceDescription.setType("searching");
+				agentDescription.addServices(serviceDescription);
+				try {
+					DFAgentDescription[] descriptions = DFService.search(myAgent, agentDescription);
+					aids = new AID[descriptions.length];
+					for (int i = 0; i < descriptions.length; i++) {
+						DFAgentDescription d = descriptions[i];
+						aids[i] = d.getName();
+					}
+				} catch (FIPAException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
 		addBehaviour(new RequestServer());
 	}
 
