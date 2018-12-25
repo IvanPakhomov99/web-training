@@ -20,7 +20,7 @@ public abstract class MockServletTestCase extends BasicServletTestCaseAdapter {
 		this.mockUserDao = mockUserDao;
 	}
 
-	protected void setUp() throws Exception {
+	public void setUp() throws Exception {
 		super.setUp();
 		Properties properties = new Properties();
 		properties.setProperty("dao.factory", MockDaoFactory.class.getName());
@@ -28,7 +28,7 @@ public abstract class MockServletTestCase extends BasicServletTestCaseAdapter {
 		setMockUserDao(((MockDaoFactory) DaoFactory.getInstance()).getMockUserDao());
 	}
 
-	protected void tearDown() throws Exception {
+	public void tearDown() throws Exception {
 		getMockUserDao().verify();
 		super.tearDown();
 	}

@@ -15,16 +15,15 @@ import com.mockobjects.dynamic.Mock;
 
 import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
+import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.eventdata.StringEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
 import pakhomov.labs.db.DaoFactory;
-import pakhomov.labs.db.DaoFactoryImpl;
 import pakhomov.labs.db.MockDaoFactory;
-import pakhomov.labs.db.MockUserDao;
 import pakhomov.labs.gui.MainFrame;
 import pakhomov.labs.util.Messages;
-import ua.nure.kn16.potapov.usermanagement.User;
+import pakhomov.labs.User;
 
 public class MainFrameTest extends JFCTestCase {
 
@@ -41,7 +40,7 @@ public class MainFrameTest extends JFCTestCase {
 		DaoFactory.init(properties);
 		mockUserDao = ((MockDaoFactory) DaoFactory.getInstance()).getMockUserDao();
 		
-		mockUserDao.expectAndReturn("findAll", new ArrayList());
+		mockUserDao.expectAndReturn("findAll", new ArrayList<Object>());
 		
 		setHelper(new JFCTestHelper());
 		mainFrame = new MainFrame();
@@ -57,7 +56,8 @@ public class MainFrameTest extends JFCTestCase {
 		try {
 			mockUserDao.verify();
 			mainFrame.setVisible(false);
-			getHelper().cleanUp(this);
+			getHelper();
+			TestHelper.cleanUp(this);
 			super.tearDown();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -65,7 +65,7 @@ public class MainFrameTest extends JFCTestCase {
 		}
 	}
 	
-	private Component find(Class componentClass, String name) {
+	private Component find(Class<?> componentClass, String name) {
 		NamedComponentFinder finder;
 		finder = new NamedComponentFinder(componentClass, name);
 		finder.setWait(0);
@@ -103,7 +103,7 @@ public class MainFrameTest extends JFCTestCase {
 			User expectedUser = new User(new Long(1), firstName, lastName, now);
 			mockUserDao.expectAndReturn("create", user, expectedUser);
 			
-			ArrayList users = new ArrayList();
+			ArrayList<User> users = new ArrayList<User>();
 			users.add(expectedUser);
 			mockUserDao.expectAndReturn("findAll", users);
 						

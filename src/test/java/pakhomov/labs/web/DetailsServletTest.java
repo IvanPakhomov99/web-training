@@ -1,10 +1,12 @@
 package pakhomov.labs.web;
 
+import static org.junit.Assert.assertNull;
+
 import pakhomov.labs.User;
 
 public class DetailsServletTest extends MockServletTestCase {
 	@Override
-	protected void setUp() throws Exception {
+	public void setUp() throws Exception {
 		super.setUp();
 		createServlet(DetailsServlet.class);
 	}

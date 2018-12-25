@@ -1,13 +1,16 @@
 package pakhomov.labs.web;
 
 import java.util.Date;
+
+import static org.junit.Assert.assertNotNull;
+
 import java.text.DateFormat;
 import pakhomov.labs.User;
 
 public class EditServletTest extends MockServletTestCase {
 
 	@Override
-	protected void setUp() throws Exception {
+	public void setUp() throws Exception {
 		super.setUp();
 		createServlet(EditServlet.class);
 	}
