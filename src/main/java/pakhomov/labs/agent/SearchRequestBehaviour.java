@@ -4,6 +4,10 @@ import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 
+/**
+ * @author ІванПахомов
+ *
+ */
 public class SearchRequestBehaviour extends Behaviour {
 
 	private static final long serialVersionUID = 1L;

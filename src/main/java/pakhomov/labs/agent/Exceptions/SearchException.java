@@ -1,5 +1,9 @@
 package pakhomov.labs.agent.Exceptions;
 
+/**
+ * @author ІванПахомов
+ *
+ */
 public class SearchException extends Exception{
 
 	private static final long serialVersionUID = 1L;
