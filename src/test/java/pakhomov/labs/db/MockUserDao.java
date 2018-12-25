@@ -11,7 +11,7 @@ import pakhomov.labs.db.UserDao;
 
 public class MockUserDao implements UserDao {
 	private long id = 0;
-	private Map users = new HashMap();
+	private Map<Long, User> users = new HashMap<Long, User>();
 
 	@Override
 	public User create(User user) throws DatabaseException {
@@ -43,7 +43,7 @@ public class MockUserDao implements UserDao {
 	}
 
 	@Override
-	public Collection findAll() throws DatabaseException {
+	public Collection<User> findAll() throws DatabaseException {
 	
 		return users.values();
 	}
@@ -52,6 +52,11 @@ public class MockUserDao implements UserDao {
 	public void setConnectionFactory(ConnectionFactory connectionFactory) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public Collection<User> find(String firstName, String lastName) throws DatabaseException {
+		throw new UnsupportedOperationException();
 	}
 
 }
