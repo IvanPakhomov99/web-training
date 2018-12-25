@@ -3,6 +3,7 @@ package pakhomov.labs.agent;
 import java.util.Collection;
 import pakhomov.labs.User;
 import pakhomov.labs.agent.Exceptions.SearchException;
+import pakhomov.labs.agent.SearchGUI;
 import pakhomov.labs.db.DaoFactory;
 import pakhomov.labs.db.DatabaseException;
 import jade.core.AID;
@@ -25,11 +26,14 @@ public class SearchAgent extends Agent {
 	private static final long serialVersionUID = 1L;
 
 	private AID[] aids;
+	private SearchGUI gui = null;
 
 	@Override
 	protected void setup() {
 		super.setup();
 		System.out.println(getAID().getName() + " started");
+		gui = new SearchGUI(this);
+		gui.setVisible(true);
 		DFAgentDescription description = new DFAgentDescription();
 		description.setName(getAID());
 		ServiceDescription serviceDescription = new ServiceDescription();
@@ -74,6 +78,8 @@ public class SearchAgent extends Agent {
 		} catch (FIPAException e) {
 			e.printStackTrace();
 		}
+		gui.setVisible(false);
+		gui.dispose();
 		super.takeDown();
 	}
 
@@ -91,6 +97,6 @@ public class SearchAgent extends Agent {
 	}
 
 	public void showUsers(Collection<User> users) {
-		//
+		gui.addUsers(users);
 	}
 }

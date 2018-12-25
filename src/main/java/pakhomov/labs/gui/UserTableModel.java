@@ -13,10 +13,10 @@ public class UserTableModel extends AbstractTableModel {
 	
 	private static final String[] COLUMN_NAMES = {Messages.getString("UserTableModel.id"), Messages.getString("UserTableModel.first_name"), Messages.getString("UserTableModel.last_name")}; 
 	private static final Class[] COLUMN_CLASSES = {Long.class, String.class, String.class};
-	private List users = null; 
+	private List<User> users = null; 
 	
-	public UserTableModel(Collection users) {
-		this.users = new ArrayList(users);
+	public UserTableModel(Collection<User> users) {
+		this.users = new ArrayList<User>(users);
 	}
 
 	@Override
@@ -63,13 +63,13 @@ public class UserTableModel extends AbstractTableModel {
 		return (User) users.get(index);
 	}
 
-	public void addUsers(Collection users) {
+	public void addUsers(Collection<User> users) {
 		this.users.addAll(users);
 
 	}
 
 	public void clearUsers() {
-		this.users = new ArrayList();
+		this.users = new ArrayList<User>();
 	}
 
 }
