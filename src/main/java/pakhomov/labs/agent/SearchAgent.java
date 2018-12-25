@@ -7,12 +7,13 @@ public class SearchAgent extends Agent {
 	@Override
 	protected void setup() {
 		super.setup();
+		System.out.println(getAID().getName() + " started");
 	}
 
 	@Override
 	protected void takeDown() {
-		// TODO Auto-generated method stub
 		super.takeDown();
+		System.out.println(getAID().getName() + " terminated");
 	}
 
 }
